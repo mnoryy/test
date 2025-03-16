@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>تهنئة بالاسم</title>
+</head>
+<body>
+    <img id="greeting-image" src="greeting.png" alt="صورة التهنئة">
+    <br>
+    <input type="text" id="name-input" placeholder="أدخل اسمك">
+    <button onclick="addNameToImage()">أضف الاسم</button>
+    <canvas id="canvas" style="display: none;"></canvas>
+
+    <script>
+        function addNameToImage() {
+            const name = document.getElementById('name-input').value;
+            const image = document.getElementById('greeting-image');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+
+            canvas.width = image.width;
+            canvas.height = image.height;
+            context.drawImage(image, 0, 0);
+
+            context.font = '30px Arial';
+            context.fillStyle = 'black';
+            context.fillText(name, 50, 50); // يمكنك تعديل هذه القيم لتغيير موقع الاسم وحجمه
+
+            const dataURL = canvas.toDataURL();
+            image.src = dataURL;
+        }
+    </script>
+</body>
+</html>
