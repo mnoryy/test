@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقة تهنئة تفاعلية</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        canvas { border: 1px solid #000; }
+        input, button { margin-top: 10px; padding: 10px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h2>أنشئ بطاقة تهنئتك</h2>
+    <input type="text" id="nameInput" placeholder="أدخل الاسم هنا">
+    <button onclick="generateCard()">إضافة الاسم</button>
+    <br>
+    <canvas id="greetingCanvas"></canvas>
+    <br>
+    <button onclick="downloadCard()">تحميل الصورة</button>
+
+    <script>
+        const img = new Image();
+        img.src = 'greeting.png';  // استبدل هذا بمسار الصورة الفعلي
+        img.onload = () => {
+            const canvas = document.getElementById("greetingCanvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+        };
+
+        function generateCard() {
+            const name = document.getElementById("nameInput").value;
+            if (!name) return;
+            const canvas = document.getElementById("greetingCanvas");
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            ctx.font = "30px Arial";
+            ctx.fillStyle = "black";
+            ctx.textAlign = "center";
+            ctx.fillText(name, canvas.width / 2, canvas.height - 50); // تعديل الموقع حسب الصورة
+        }
+
+        function downloadCard() {
+            const canvas = document.getElementById("greetingCanvas");
+            const link = document.createElement("a");
+            link.download = "greeting-card.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        }
+    </script>
+</body>
+</html>
